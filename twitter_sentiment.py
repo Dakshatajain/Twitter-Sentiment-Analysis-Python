@@ -1,0 +1,107 @@
+# Topic : Twitter Sentiment analysis : Sentiment Analysis of tweets related to "Monday Motivation"
+# Author : Dakshata Jain 
+
+# Project: To identify if the general sentiment of the topic is positive or negative. The analysis is done in two parts:
+# Part 1: Overall analysis of the topic by calculating total number of positive and negative words and intrepreting the general sentiment of the topic.
+# Part 2: Analysis of tweets and categorizing them as positive, negative or neutral tweets to intrepret the sentiment of the overall topic.
+
+# Approach:
+# Step 1: Extracted tweets for the topic "#MondayMotivation". Number of tweets = 959
+# Step 2: Extracted positive('positive word list')and negative('negative word list') word lists from lexicon.com
+# Step 3: Converting the positive word list text file into dictionary in order to increase the processing speed
+
+
+#Importing the libraries
+from itertools import islice
+from prettytable import PrettyTable
+import prettytable
+import os
+import re
+import settings
+
+#Function to print few elements from the dictionary
+def take(n, iterable):
+    "Return first n items of the iterable as a list"
+    return list(islice(iterable, n))
+
+# Creating a function that creates dictionary from the text file with the word as key and increment number as value:
+def createdict(file,n):
+    with open(os.path.join(settings.DATA_DIR, file), 'r') as f: 
+        f_text = f.read().split('\n')
+        f_dict = {f_text[w]:w for w in range(0,len(f_text))}
+    print(take(n,f_dict.items()))
+    return f_dict
+
+#Positive word dictionary:
+p_dict = createdict('positive word list.txt',3)
+
+
+# Step 4: Converting the negative word list text file into dictionary similar to p_dict
+n_dict=createdict('negative word list.txt',3)
+
+
+# Step 5: Part 1 : 
+# Calculating number of positive and negative words in all the tweets and the difference between the two counters to assess the sentiment of the topic using the following approach:
+#   a. Creating 2 increment counters to store positive and negative words in the tweets and setting them to '0'
+#   b. Reading the extracted tweets text file.
+#   c. Running a for loop to read each line in the file, clean the file for any special characters, convert all the words in lowercase and split each word in the file as an individual string.
+#   d. Running nested for loop to read each word in the cleaned file,then check if the word exists in p_dict dictionary created and if so then increment the positive word counter by 1, else repeat the process for negative counter
+#   e. Finally calculate the score which is the difference between the number of positive and negative words
+
+#Part 2: 
+# Calculating number of positive, negative and neutral tweets to assess the sentiment of the topic using the following approach:
+#    a. Creating 3 increment counters to store number of positive, negative and neutral tweets and setting them to '0'
+#    b. Reading the extracted tweets text file.
+#    c. Running a for loop to read each line in the file,create and set the variable,score to 0,clean the file for any special characters, convert all the words in lowercase and split each word in the file as an individual string.
+#    d. Running nested for loop to read each word in the cleaned file,then check if the word exists in p_dict dictionary created and if so then add 1 to the variable score and if the word exists in n_dict, add -1 to score. Repeat the process for all the words in the line and compute the final score for each line(tweet) 
+#    e. Compare the value of score to 0, and depending on whether equal to, greater than or less than 0, increment the neutral, positive or negative counter respectively
+#    f. Compare the number of positive, negative and neutral tweets to assess the sentiment
+
+#Function to compute score for all the tweets and each tweet individually:
+def score(file,p_dict,n_dict,indicator = 'both'):
+    Negative_counter = 0
+    Positive_counter = 0
+    Negativetweet_counter = 0
+    Positivetweet_counter = 0
+    Neutraltweet_counter = 0
+    
+    
+    with open(os.path.join(settings.DATA_DIR, file), 'r') as f:
+        for line in f:
+            score=0
+            a = re.sub('[^a-zA-Z \n\.]','',line)
+            for word in a.split(' '):
+                if word != ' ':
+                    if word in p_dict:
+                        Positive_counter += 1
+                        score += 1
+                    elif word in n_dict:
+                        Negative_counter += 1 
+                        score += -1
+        
+            if score==0:                           #if score equals to 0, increment the neutral counter
+                Neutraltweet_counter += 1
+            elif score>0:                          #else if score is greater than 0, increment the positive counter
+                Positivetweet_counter += 1
+            else:                                  #else, increment the negative counter
+                Negativetweet_counter += 1 
+    
+    word_score =  Positive_counter - Negative_counter
+    
+    pt = prettytable.PrettyTable(['Evaluated','Positive_count','Negative_count','Neutral_count','Final_score'])
+    
+    r1 = ['Tweet'] + [Positivetweet_counter] + [Negativetweet_counter] + [Neutraltweet_counter] + ['N/A']
+    r2 = ['Words'] + [Positive_counter] + [Negative_counter] + ['N/A'] + [word_score] 
+    
+    if indicator == 'tweet':
+        pt.add_row(r1)
+    elif indicator == 'words':
+        pt.add_row(r2)
+    else:
+        pt.add_row(r1)
+        pt.add_row(r2)
+
+    print(pt)
+
+#Applying the function:
+score('MondayMotivation.txt',p_dict,n_dict)
