@@ -44,7 +44,7 @@ Download the data
 
 * Clone this repo to your computer.
 * Get into the folder using cd Twitter-Sentiment-Analysis-Python-master.
-* Set up a twitter account and get the access token
+* Sign in on https://apps.twitter.com/ using your Twitter account and set up a twitter account to get the access keys and           tokens
 * Replace the keys and tokens in config.cfg file
 * Install tweepy 
 * Run the program with the desired topic term (e.g. MondayMotivation)
