@@ -34,9 +34,9 @@ The number of positive tweets (58% of total tweets) are comparatively greater th
 
 Thus, it can be inferred from both part 1 and 2 that the general sentiment is <b>Moderately Positive</b> but further analysis would be required to determine the degree of positivity.
 
-___Note:___ The limitation of the analysis are similar to part 1.
+___Note:___ The limitation of the analysis is similar to part 1.
 
-The result also indicates that for MondayMotivation most frequently used positive word and negative word is 'Win' and 'Evil' respectively
+The result also indicates that for MondayMotivation most frequently used positive word and negative word is 'Win' and 'Evil' respectively.
 
 __Installation__
 
@@ -49,8 +49,7 @@ Download the data
 * Install tweepy 
 * Run the program with the desired topic term (e.g. MondayMotivation)
     - python tweetering.py MondayMotivation
-* Save the tweets extracted as a text file in the data directory.
-* Data directory already contains list of positive and negative words. 
+* Save the extracted tweets as a text file in the data dictionary. (The data dictionary already contains positive and negative word list downloaded. You can replace it if required)
 
 __Usage__
 
