@@ -4,9 +4,8 @@
 __Objective__:
 
 This project is done as a part of coursework. It uses Twitter to understand how people are feeling about any given topic. For the purpose of this analysis the topic chosen is 'MondayMotivation'. It includes a script for the following:
-1. Stream tweets of particular user/hashtag/term
-2. Store entire tweets of a user in a txt file
-3. Perform sentimental analysis on a tweet and identify most frequent positive and negative words for a topic
+* Stream tweets of particular user/hashtag/term and store it in a text file.
+* Perform sentimental analysis on a tweet and identify most frequent positive and negative words for a topic.
 
 __Data Overview__:
 
