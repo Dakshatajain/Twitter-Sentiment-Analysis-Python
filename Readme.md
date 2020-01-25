@@ -43,14 +43,14 @@ __Installation__
 Download the data
 
 * Clone this repo to your computer.
-* Get into the folder using cd Twitter-Analysis.
-* Run mkdir data.
-* Switch into the data directory using cd data.
+* Get into the folder using cd Twitter-Sentiment-Analysis-Python-master.
 * Set up a twitter account and get the access token
 * Replace the keys and tokens in config.cfg file
 * Install tweepy 
 * Run the program with the desired topic term (e.g. MondayMotivation)
     - python tweetering.py MondayMotivation
+* Save the tweets extracted as a text file in the data directory.
+* Data directory already contains list of positive and negative words. 
 
 __Usage__
 
